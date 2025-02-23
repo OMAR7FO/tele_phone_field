@@ -50,6 +50,8 @@ class CustomPhoneField extends StatefulWidget {
   final double? dividerWidth;
   final double? paddingBetweenCountryContainerAndPhoneField;
   final PickerDialogStyle? pickerDialogStyle;
+  final CountryCodeSize countryCodeSize;
+
   const CustomPhoneField({
     super.key,
     this.paddingBetweenCountryContainerAndPhoneField,
@@ -62,6 +64,7 @@ class CustomPhoneField extends StatefulWidget {
     this.dividerColor,
     this.dividerWidth,
     this.phoneNumberController,
+    this.countryCodeSize = CountryCodeSize.five,
     this.disableLengthCheck = false,
     this.countryCodeController,
     this.decoration = const InputDecoration(),
@@ -100,6 +103,7 @@ class CustomPhoneField extends StatefulWidget {
 class _CustomPhoneFieldState extends State<CustomPhoneField> {
   late List<CountryPhone> _countryList;
   late List<CountryPhone> filteredCountries;
+
   late String number;
   late TextEditingController _countryCodeController;
   late TextEditingController _countryPhoneController;
@@ -347,7 +351,7 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
           children: [
             Text('+', style: widget.style),
             SizedBox(
-              width: constraints.maxWidth / 6,
+              width: constraints.maxWidth / widget.countryCodeSize.size,
               child: TextFormField(
                 focusNode: countryCodeFocusNode,
                 cursorColor: widget.cursorColor,
@@ -373,5 +377,28 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
         ),
       ),
     );
+  }
+}
+
+enum CountryCodeSize { one, two, three, four, five, six, seven }
+
+extension CountryCodeWidth on CountryCodeSize {
+  int get size {
+    switch (this) {
+      case CountryCodeSize.one:
+        return 1;
+      case CountryCodeSize.two:
+        return 2;
+      case CountryCodeSize.three:
+        return 3;
+      case CountryCodeSize.four:
+        return 4;
+      case CountryCodeSize.five:
+        return 5;
+      case CountryCodeSize.six:
+        return 6;
+      case CountryCodeSize.seven:
+        return 7;
+    }
   }
 }

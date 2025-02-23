@@ -151,6 +151,7 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
         );
       }
     }
+    widget.onCountryChanged(_selectedCountry!);
     if (widget.autoValidateMode == AutovalidateMode.always) {
       final initialPhoneNumber = PhoneNumber(
         countryISOCode: _selectedCountry!.code,

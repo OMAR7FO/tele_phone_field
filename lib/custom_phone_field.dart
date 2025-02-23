@@ -116,8 +116,7 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
     number = widget.initialValue ?? "";
     _countryCodeController =
         widget.countryCodeController ?? TextEditingController();
-    _countryPhoneController =
-        widget.phoneNumberController ??
+    _countryPhoneController = widget.phoneNumberController ??
         TextEditingController(text: widget.initialValue);
     if (widget.initialCountryCode == null && number.startsWith('+')) {
       number = number.substring(1);
@@ -182,10 +181,9 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
   }
 
   MatchedCountriesResult checkIfThereIsMatchedCountry({required String code}) {
-    List<CountryPhone> matchedCountries =
-        countries
-            .where((CountryPhone country) => country.dialCode.startsWith(code))
-            .toList();
+    List<CountryPhone> matchedCountries = countries
+        .where((CountryPhone country) => country.dialCode.startsWith(code))
+        .toList();
     try {
       late CountryPhone matchedCountry;
       if (code == "1") {
@@ -232,18 +230,17 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
             await showDialog(
               context: context,
               useRootNavigator: false,
-              builder:
-                  (context) => CountryPickerDialog(
-                    languageCode: widget.languageCode.toLowerCase(),
-                    style: widget.pickerDialogStyle,
-                    filteredCountries: filteredCountries,
-                    searchText: "Search Country",
-                    countryList: _countryList,
-                    selectedCountry: _selectedCountry,
-                    onCountryChanged: (CountryPhone? country) {
-                      _changeSelectedCountry(country: country);
-                    },
-                  ),
+              builder: (context) => CountryPickerDialog(
+                languageCode: widget.languageCode.toLowerCase(),
+                style: widget.pickerDialogStyle,
+                filteredCountries: filteredCountries,
+                searchText: "Search Country",
+                countryList: _countryList,
+                selectedCountry: _selectedCountry,
+                onCountryChanged: (CountryPhone? country) {
+                  _changeSelectedCountry(country: country);
+                },
+              ),
             );
           },
         ),
@@ -273,7 +270,6 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
               keyboardType: TextInputType.number,
               cursorColor: widget.cursorColor,
               onFieldSubmitted: widget.onSubmitted,
-
               onSaved: (value) {
                 widget.onSaved?.call(
                   PhoneNumber(
@@ -311,14 +307,12 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
                 widget.onChanged?.call(phoneNumber);
               },
               decoration: widget.decoration.copyWith(
-                hintText:
-                    _selectedCountry == null
-                        ? widget.decoration.hintText
-                        : List.generate(
-                          _selectedCountry!.maxLength,
-                          (index) => '0',
-                        ).join(),
-
+                hintText: _selectedCountry == null
+                    ? widget.decoration.hintText
+                    : List.generate(
+                        _selectedCountry!.maxLength,
+                        (index) => '0',
+                      ).join(),
                 prefixIcon: _buildCountryCodeTextField(constraints),
               ),
             );
@@ -346,15 +340,14 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
   Widget _buildCountryCodeTextField(BoxConstraints constraints) {
     return IntrinsicHeight(
       child: Padding(
-        padding:
-            widget.decoration.contentPadding ??
+        padding: widget.decoration.contentPadding ??
             EdgeInsets.symmetric(horizontal: 8),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('+', style: widget.style),
             SizedBox(
-              width: constraints.maxWidth / 7,
+              width: constraints.maxWidth / 6,
               child: TextFormField(
                 focusNode: countryCodeFocusNode,
                 cursorColor: widget.cursorColor,
@@ -363,7 +356,10 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
                 keyboardType: TextInputType.number,
                 controller: _countryCodeController,
                 onChanged: _onCountryCodeChanged,
-                decoration: InputDecoration(border: InputBorder.none),
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Colors.transparent,
+                    filled: true),
               ),
             ),
             VerticalDivider(

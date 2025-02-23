@@ -1,0 +1,22 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    avoid_print: true
+    always_use_package_imports: true
+    unnecessary_this: true
+    always_declare_return_types: true
+    use_key_in_widget_constructors: true
+    avoid_unnecessary_containers: true
+    prefer_const_constructors: true
+    prefer_const_constructors_in_immutables: true
+    sort_child_properties_last: true
+    sort_unnamed_constructors_first: true
+    avoid_init_to_null: true
+    prefer_double_quotes: true
+    unnecessary_lambdas: true
+    use_function_type_syntax_for_parameters: true
+    curly_braces_in_flow_control_structures: true
+    always_specify_types: true
+    avoid_dynamic_calls: true
+    avoid_annotating_with_dynamic: true

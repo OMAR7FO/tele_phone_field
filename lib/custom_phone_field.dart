@@ -49,8 +49,8 @@ class CustomPhoneField extends StatefulWidget {
   final Color? dividerColor;
   final double? dividerWidth;
   final double? paddingBetweenCountryContainerAndPhoneField;
+  final double countryCodeWidth;
   final PickerDialogStyle? pickerDialogStyle;
-  final CountryCodeSize countryCodeSize;
 
   const CustomPhoneField({
     super.key,
@@ -58,13 +58,13 @@ class CustomPhoneField extends StatefulWidget {
     this.invalidCountryMessage,
     this.pickerDialogStyle,
     this.countryContainerWidth,
-    required this.countryContainerHeight,
+    this.countryContainerHeight = 55,
     this.countryContainerDecoration,
     required this.onCountryChanged,
+    this.countryCodeWidth = 60,
     this.dividerColor,
     this.dividerWidth,
     this.phoneNumberController,
-    this.countryCodeSize = CountryCodeSize.five,
     this.disableLengthCheck = false,
     this.countryCodeController,
     this.decoration = const InputDecoration(),
@@ -230,6 +230,7 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
           width: widget.countryContainerWidth,
           height: widget.countryContainerHeight,
           decoration: widget.countryContainerDecoration,
+          languageCode: widget.languageCode,
           onTap: () async {
             filteredCountries = _countryList;
             await showDialog(
@@ -296,7 +297,7 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
                   return value.length >= _selectedCountry!.minLength &&
                           value.length <= _selectedCountry!.maxLength
                       ? null
-                      : widget.invalidNumberMessage;
+                      : widget.invalidNumberMessage ?? "Invalid Number";
                 }
                 return validatorMessage;
               },
@@ -352,7 +353,7 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
           children: [
             Text('+', style: widget.style),
             SizedBox(
-              width: constraints.maxWidth / widget.countryCodeSize.size,
+              width: widget.countryCodeWidth,
               child: TextFormField(
                 focusNode: countryCodeFocusNode,
                 cursorColor: widget.cursorColor,
@@ -362,9 +363,11 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
                 controller: _countryCodeController,
                 onChanged: _onCountryCodeChanged,
                 decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.transparent,
-                    filled: true),
+                  border: InputBorder.none,
+                  fillColor: Colors.transparent,
+                  filled: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
               ),
             ),
             VerticalDivider(
@@ -378,28 +381,5 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
         ),
       ),
     );
-  }
-}
-
-enum CountryCodeSize { one, two, three, four, five, six, seven }
-
-extension CountryCodeWidth on CountryCodeSize {
-  int get size {
-    switch (this) {
-      case CountryCodeSize.one:
-        return 1;
-      case CountryCodeSize.two:
-        return 2;
-      case CountryCodeSize.three:
-        return 3;
-      case CountryCodeSize.four:
-        return 4;
-      case CountryCodeSize.five:
-        return 5;
-      case CountryCodeSize.six:
-        return 6;
-      case CountryCodeSize.seven:
-        return 7;
-    }
   }
 }

@@ -186,9 +186,12 @@ class _CustomPhoneFieldState extends State<CustomPhoneField> {
   }
 
   MatchedCountriesResult checkIfThereIsMatchedCountry({required String code}) {
-    List<CountryPhone> matchedCountries = countries
-        .where((CountryPhone country) => country.dialCode.startsWith(code))
-        .toList();
+    List<CountryPhone> matchedCountries = widget.countries
+            ?.where((CountryPhone country) => country.dialCode.startsWith(code))
+            .toList() ??
+        countries
+            .where((CountryPhone country) => country.dialCode.startsWith(code))
+            .toList();
     try {
       late CountryPhone matchedCountry;
       if (code == "1") {
